@@ -103,4 +103,45 @@ const filmy = [
 			'Na zámek v podhůří Krkonoš přijíždí jeho nový majitel Štěpán se svojí snoubenkou, krásnou komtesou Blankou, a mladším bratrem Adamem. Cestou kočár nešťastně srazí kolemjdoucí dívku, Adam jí pomůže a ona se do něj zamiluje. Na zámku Adam objeví starou vlašskou knihu, která by měla obsahovat cestu k pokladům. Tajemné značky vlašské knihy však nedokáže vyluštit ani národopisec Jiráček, který v kraji sbírá pověsti a nevychází z údivu nad tím, že zdejší lidé stále věří v Krakonoše. Na zámku se objeví záhadný cizinec a nabídne Štěpánovi, že jej k pokladu za určitých podmínek dovede. Výprava do hor může začít. Naplní se Liduščina láska k Adamovi? Jakou záhadu skrývá starý obraz na zámku Hůrka a co strašlivého se v horách kdysi odehrálo? A kdo je vlastně Krakonoš a jaké je jeho největší tajemství? (csfd.cz, Česká televize)',
 		premiera: '2022-12-24',
 	},
+	// ukol 4 - bonus
+	{
+		id: 'male-zeny',
+		nazev: 'Malé ženy',
+		plakat: {
+			url: 'https://image.pmgstatic.com/cache/resized/w420/files/images/film/posters/163/926/163926618_2827d9.jpg',
+			sirka: 420,
+			vyska: 662,
+		},
+		ochutnavka: 'Filmové zpracovaní knižní klasiky',
+		popis: 
+			'Autorka a režisérka Greta Gerwigová vytvořila Malé ženy, které čerpají z klasického románu a díla Louisy May Alcottové, a zároveň se v autorčině alter egu Jo Marchové odráží její fiktivní život. V podání Gerwigové se oblíbený příběh sester Marchových – čtyř mladých žen, z nichž každá je odhodlaná prožít život podle svého – stává nadčasovým a velice aktuálním.',
+		premiera: '2019-12-25',
+
+	}
 ]
+
+// ukol 4
+const seznam = document.querySelector('#seznam-filmu')
+
+seznam.textContent = ''
+
+filmy.forEach((film) => {
+	seznam.innerHTML += `
+	<div class="col">
+    	<div class="card">
+	  		<img
+				src="${film.plakat.url}"
+				width="${film.plakat.sirka}"
+				height="${film.plakat.vyska}"
+				class="card-img-top"
+				alt="plakát"
+	 		 >
+	  		<div class="card-body">
+				<h5 class="card-title">${film.nazev}</h2>
+				<p class="card-text">${film.ochutnavka}</p>
+				<a href="film.html" class="btn btn-primary">Přehrát</a>
+	  		</div>
+		</div>
+	</div>
+	`;
+  });
