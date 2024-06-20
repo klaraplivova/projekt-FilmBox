@@ -103,4 +103,200 @@ const filmy = [
 			'Na zámek v podhůří Krkonoš přijíždí jeho nový majitel Štěpán se svojí snoubenkou, krásnou komtesou Blankou, a mladším bratrem Adamem. Cestou kočár nešťastně srazí kolemjdoucí dívku, Adam jí pomůže a ona se do něj zamiluje. Na zámku Adam objeví starou vlašskou knihu, která by měla obsahovat cestu k pokladům. Tajemné značky vlašské knihy však nedokáže vyluštit ani národopisec Jiráček, který v kraji sbírá pověsti a nevychází z údivu nad tím, že zdejší lidé stále věří v Krakonoše. Na zámku se objeví záhadný cizinec a nabídne Štěpánovi, že jej k pokladu za určitých podmínek dovede. Výprava do hor může začít. Naplní se Liduščina láska k Adamovi? Jakou záhadu skrývá starý obraz na zámku Hůrka a co strašlivého se v horách kdysi odehrálo? A kdo je vlastně Krakonoš a jaké je jeho největší tajemství? (csfd.cz, Česká televize)',
 		premiera: '2022-12-24',
 	},
+	// ukol 4 - bonus
+	{
+		id: 'male-zeny',
+		nazev: 'Malé ženy',
+		plakat: {
+			url: 'https://image.pmgstatic.com/cache/resized/w420/files/images/film/posters/163/926/163926618_2827d9.jpg',
+			sirka: 420,
+			vyska: 662,
+		},
+		ochutnavka: 'Filmové zpracovaní knižní klasiky',
+		popis: 
+			'Autorka a režisérka Greta Gerwigová vytvořila Malé ženy, které čerpají z klasického románu a díla Louisy May Alcottové, a zároveň se v autorčině alter egu Jo Marchové odráží její fiktivní život. V podání Gerwigové se oblíbený příběh sester Marchových – čtyř mladých žen, z nichž každá je odhodlaná prožít život podle svého – stává nadčasovým a velice aktuálním.',
+		premiera: '2019-12-25',
+
+	}
 ]
+
+// ukol 5 
+
+const filmId = window.location.hash.slice(1);
+const filmyData = filmy.find((film) => film.id === filmId);
+const detailFilmu = document.querySelector('#detail-filmu');
+
+const plakat = detailFilmu.querySelector('.col-md-5')
+const nazevFilmu = detailFilmu.querySelector('.card-title')
+const popisFilmu = detailFilmu.querySelector('.card-text')
+
+nazevFilmu.innerHTML = `${filmyData.nazev}`
+popisFilmu.innerHTML = `${filmyData.popis}`
+
+plakat.innerHTML = `
+			<img
+				src="${filmyData.plakat.url}"
+				alt="plakát"
+				class="img-fluid rounded-start"
+				width="${filmyData.plakat.sirka}"
+				height="${filmyData.plakat.vyska}"
+			/> 
+`
+// ukol 6 
+
+const premieraFilmu = document.querySelector('#premiera')
+const datumPremiery = dayjs(filmyData.premiera)
+
+premieraFilmu.innerHTML = `Premiéra <strong>${datumPremiery.format('D. M. YYYY')}</strong>`
+
+// ukol 6 - bonus
+
+const vzdalenostDat = datumPremiery.diff(dayjs(), 'days')
+
+if (vzdalenostDat > 0) {
+	premieraFilmu.innerHTML += `, což je za ${vzdalenostDat} `
+
+	if (vzdalenostDat == 1) {
+		premieraFilmu.innerHTML += `den.`
+	} else if (vzdalenostDat < 5) {
+		premieraFilmu.innerHTML += `dny.`
+	} else {
+		premieraFilmu.innerHTML += `dní.`
+	}
+
+} else if (vzdalenostDat == 0) {
+	premieraFilmu.innerHTML += `, což je dnes.`
+
+} else {
+	premieraFilmu.innerHTML += `, což bylo před ${Math.abs(vzdalenostDat)} `
+	
+	if (vzdalenostDat == -1) {
+		premieraFilmu.innerHTML += `dnem.`
+	} else {
+		premieraFilmu.innerHTML += `dny.`
+	}
+}
+
+// ukol 7
+const hvezdy = document.querySelectorAll('.fa-star')
+
+const hodnoceni = (number) => {
+	hvezdy.forEach((prvek, poradi) => {
+		if (poradi <= number) {
+			prvek.classList.add('fas');
+			prvek.classList.remove('far');
+		} else {
+			prvek.classList.add('far');
+			prvek.classList.remove('fas');
+		}
+		
+	})
+}
+
+let zvolenaHvezda = 0
+
+hvezdy.forEach((prvek) => {
+	const cisloHvezdy = Number(prvek.textContent) - 1
+	prvek.addEventListener('click', () => {
+		zvolenaHvezda = cisloHvezdy
+		hodnoceni(cisloHvezdy)
+	})
+	
+	prvek.addEventListener('mouseenter', () => {
+		hodnoceni(cisloHvezdy)
+	})
+
+	prvek.addEventListener('mouseleave', () => {
+		hodnoceni(zvolenaHvezda)})
+})
+
+// ukol 8
+
+const poznamka = document.querySelector('#note-form')
+const input = document.querySelector('#message-input')
+const checkBox = document.querySelector('#terms-checkbox')
+
+const pridatPoznamku = (event) => {
+	event.preventDefault()
+
+	if (input.value.trim() === '') {
+		input.classList.add('is-invalid')
+		input.focus()
+	} else {
+		input.classList.remove('is-invalid')
+		if (checkBox.checked == false) {
+			checkBox.classList.add('is-invalid')
+			checkBox.focus()
+		} else {
+			checkBox.classList.remove('is-invalid')
+			poznamka.textContent = `${input.value}`
+		}
+	}
+ }
+
+ poznamka.addEventListener('submit', pridatPoznamku)
+
+// ukol 9
+
+const prehravac = document.querySelector('#prehravac')
+const video = document.querySelector('video')
+const pauza = document.querySelector('.pause')
+
+prehravac.querySelector('.play').addEventListener('click', () => {
+	video.play()
+})
+
+video.addEventListener('playing', () => {
+	prehravac.classList.add('playing')
+})
+
+pauza.addEventListener('click', () => {
+	video.pause()
+})
+
+video.addEventListener('pause', () => {
+	prehravac.classList.remove('playing')
+})
+
+video.addEventListener('timeupdate', () => {
+	let casVidea = video.currentTime;
+	let casMinuty = Math.floor(casVidea / 60).toString().padStart(2, '0')
+	let casSekundy = Math.floor(casVidea % 60).toString().padStart(2, '0')
+	document.querySelector('.current-time').textContent = `${casMinuty}:${casSekundy}`
+})
+
+// ukol 9 - bonus 
+
+document.addEventListener('keydown', (event) => {
+	if (event.code === 'Space' &&
+		event.target.tagName !== 'TEXTAREA' &&
+		event.target.tagName !== 'INPUT' &&
+		event.target.tagName !== 'BUTTON') {
+			if(video.paused) {
+				video.play()
+			} else {
+				video.pause()
+			}
+		}
+})
+
+// ukol 9 - extra bonus 
+
+const ovladani = document.querySelector('.player-controls')
+
+let zmenaOvladani
+
+const skrytOvladani = () => {
+  ovladani.classList.add('hidden')
+}
+
+const konecTimeout = () => {
+  clearTimeout(zmenaOvladani)
+  ovladani.classList.remove('hidden')
+  zmenaOvladani = setTimeout(skrytOvladani, 3000)
+}
+
+zmenaOvladani = setTimeout(skrytOvladani, 3000)
+
+document.addEventListener('click', konecTimeout)
+document.addEventListener('mousemove', konecTimeout)
