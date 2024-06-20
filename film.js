@@ -183,11 +183,11 @@ const hvezdy = document.querySelectorAll('.fa-star')
 const hodnoceni = (number) => {
 	hvezdy.forEach((prvek, poradi) => {
 		if (poradi <= number) {
-			prvek.classList.add('fas');
-			prvek.classList.remove('far');
+			prvek.classList.add('fas')
+			prvek.classList.remove('far')
 		} else {
-			prvek.classList.add('far');
-			prvek.classList.remove('fas');
+			prvek.classList.add('far')
+			prvek.classList.remove('fas')
 		}
 		
 	})
