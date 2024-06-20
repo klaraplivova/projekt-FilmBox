@@ -193,7 +193,7 @@ const hodnoceni = (number) => {
 	})
 }
 
-let zvolenaHvezda = 0
+let zvolenaHvezda = - 1
 
 hvezdy.forEach((prvek) => {
 	const cisloHvezdy = Number(prvek.textContent) - 1
